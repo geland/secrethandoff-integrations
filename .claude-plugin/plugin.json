@@ -1,0 +1,24 @@
+{
+  "name": "secrethandoff",
+  "version": "0.0.1",
+  "description": "Let your agent use temporary secrets without seeing them. No vault to configure.",
+  "author": {
+    "name": "Greg Eland",
+    "url": "https://gregeland.com",
+    "email": "hello@gregeland.com"
+  },
+  "homepage": "https://secrethandoff.com",
+  "repository": "https://github.com/geland/secrethandoff-integrations",
+  "license": "MIT",
+  "keywords": [
+    "secrethandoff",
+    "secrets",
+    "credentials",
+    "api-keys",
+    "security",
+    "mcp",
+    "local",
+    "ephemeral"
+  ],
+  "displayName": "Secret Handoff"
+}

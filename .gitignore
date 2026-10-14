@@ -1,0 +1,9 @@
+.DS_Store
+dist/
+.env*
+*.pem
+*.key
+.mcpregistry_*
+evals/results/
+__pycache__/
+.claude-plugin/types/

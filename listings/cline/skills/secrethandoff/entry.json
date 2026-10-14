@@ -1,0 +1,30 @@
+{
+  "$schema": "../../../schemas/skill.schema.json",
+  "id": "secrethandoff",
+  "type": "skill",
+  "name": "Secret Handoff",
+  "tagline": "Let agents use credentials for approved API requests without receiving their values.",
+  "description": "Let agents use temporary secrets through the local Secret Handoff tool without receiving the values. Install the 0.0.1 binary first. Local fill only; phone and remote relay are not enabled on the public service.",
+  "author": {
+    "name": "Greg Eland",
+    "url": "https://gregeland.com"
+  },
+  "homepage": "https://secrethandoff.com",
+  "repo": "https://github.com/geland/secrethandoff-integrations",
+  "icon": "./icon.svg",
+  "tags": [
+    "security",
+    "software"
+  ],
+  "license": "MIT",
+  "verified": false,
+  "featured": false,
+  "install": {
+    "args": [
+      "geland/secrethandoff-integrations",
+      "--skill",
+      "secrethandoff"
+    ],
+    "notes": "Install the secrethandoff binary first and check secrethandoff version against the release lock. The skill supplies guidance; it does not install or connect the MCP server. No Secret Handoff account or service API key is required."
+  }
+}

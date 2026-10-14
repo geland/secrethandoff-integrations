@@ -1,0 +1,22 @@
+name: Validate packages
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements-review.txt
+      - run: python scripts/test_release.py
+      - run: python scripts/validate.py --release
+      - run: python scripts/package.py --release
+      - run: python scripts/test_package.py

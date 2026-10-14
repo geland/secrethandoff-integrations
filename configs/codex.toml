@@ -1,0 +1,12 @@
+[mcp_servers.secrethandoff]
+command = "secrethandoff"
+args = ["mcp"]
+
+# The user sees and approves request_secret and run_with_secret calls.
+# list_secrets and http_request run without a prompt: http_request sends a
+# secret only where the human-approved policy allows.
+[mcp_servers.secrethandoff.tools.list_secrets]
+approval_mode = "approve"
+
+[mcp_servers.secrethandoff.tools.http_request]
+approval_mode = "approve"

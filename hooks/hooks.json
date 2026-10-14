@@ -1,0 +1,39 @@
+{
+  "description": "Stops a pasted secret before it reaches the model, denies Bash commands that contain a literal secret, and draws Secret Handoff tool calls as a card.",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "secrethandoff",
+            "args": [
+              "hook",
+              "user-prompt"
+            ],
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "secrethandoff",
+            "args": [
+              "hook",
+              "bash"
+            ],
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+  "modules": [
+    "./card.tsx"
+  ]
+}

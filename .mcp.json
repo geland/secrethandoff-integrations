@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "secrethandoff": {
+      "command": "secrethandoff",
+      "args": ["mcp"]
+    }
+  }
+}

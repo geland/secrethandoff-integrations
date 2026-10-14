@@ -1,0 +1,268 @@
+{
+  "ttlMs": 0,
+  "cacheScope": "public",
+  "tools": [
+    {
+      "_meta": {
+        "ui": {
+          "resourceUri": "ui://secrethandoff/card.html"
+        }
+      },
+      "description": "Confirm a secret that the user filled on another device, with the confirmation code that the user read from their page. Only the user knows this code; never guess it.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The secret name."
+          },
+          "code": {
+            "type": "string",
+            "description": "The confirmation code exactly as the user read it from their page, for example 7KQ-2XRA."
+          }
+        },
+        "required": [
+          "name",
+          "code"
+        ],
+        "additionalProperties": false
+      },
+      "name": "confirm_secret"
+    },
+    {
+      "annotations": {
+        "destructiveHint": true,
+        "idempotentHint": true,
+        "readOnlyHint": false
+      },
+      "description": "Erase a named secret and cancel its open request. Returns forgotten or missing.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The secret name."
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false
+      },
+      "name": "forget_secret"
+    },
+    {
+      "annotations": {
+        "idempotentHint": false,
+        "openWorldHint": true,
+        "readOnlyHint": false
+      },
+      "description": "Send an HTTPS request that uses one or more secrets by name, written as {{secret:NAME}} in a header, the URL query, or the body. The binary checks each secret's policy, sends the request, and returns the response with every secret value removed. In the URL query and in a form body (Content-Type application/x-www-form-urlencoded), the value is URL-encoded; in a JSON body, it is JSON-escaped, so write {{secret:NAME}} inside the quotes. The request must use at least one secret.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "method": {
+            "type": "string",
+            "description": "HTTP method, for example GET or POST."
+          },
+          "url": {
+            "type": "string",
+            "description": "An https URL. {{secret:NAME}} may appear only in the query."
+          },
+          "headers": {
+            "type": "object",
+            "description": "Request headers. Values may contain {{secret:NAME}}, for example Authorization: Bearer {{secret:STRIPE_KEY}}.",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "body": {
+            "type": "string",
+            "description": "Request body as text. May contain {{secret:NAME}}."
+          },
+          "timeout_seconds": {
+            "type": "integer",
+            "description": "1 to 120 seconds. Default 30."
+          }
+        },
+        "required": [
+          "method",
+          "url"
+        ],
+        "additionalProperties": false
+      },
+      "name": "http_request"
+    },
+    {
+      "annotations": {
+        "idempotentHint": false,
+        "readOnlyHint": true
+      },
+      "description": "List ready secret metadata and pending requests, including remote confirmation.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "name": "list_secrets"
+    },
+    {
+      "annotations": {
+        "idempotentHint": false,
+        "readOnlyHint": true
+      },
+      "description": "Get the settings that route one command's HTTPS requests through the local secrets proxy, for tools such as curl or an SDK that cannot use http_request. The command writes {{secret:NAME}} where the secret goes; the proxy checks the policy, adds the value, and removes it from responses. Prefer http_request when it can do the task.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "name": "proxy_settings"
+    },
+    {
+      "_meta": {
+        "ui": {
+          "resourceUri": "ui://secrethandoff/card.html"
+        }
+      },
+      "description": "Request a credential with a name and policy. Reports status and presentation; repeated calls with the same name and policy rejoin the request.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name for the secret, for example STRIPE_KEY. Letters, digits, and underscores; starts with a letter."
+          },
+          "reason": {
+            "type": "string",
+            "description": "One sentence that tells the user why the secret is needed."
+          },
+          "policy": {
+            "type": "object",
+            "properties": {
+              "hosts": {
+                "type": [
+                  "null",
+                  "array"
+                ],
+                "items": {
+                  "type": "string"
+                },
+                "description": "Exact host names that may receive the secret, for example api.stripe.com. A wildcard is allowed only as the first label, for example *.example.com."
+              },
+              "methods": {
+                "type": [
+                  "null",
+                  "array"
+                ],
+                "items": {
+                  "type": "string"
+                },
+                "description": "HTTP methods allowed, for example GET and POST. Leave out to allow any method."
+              },
+              "paths": {
+                "type": [
+                  "null",
+                  "array"
+                ],
+                "items": {
+                  "type": "string"
+                },
+                "description": "URL path patterns allowed, for example /v1/charges or /v1/customers/*. Leave out to allow any path."
+              }
+            },
+            "description": "Where the secret may be sent. Ask for the narrowest policy that does the task.",
+            "required": [
+              "hosts"
+            ],
+            "additionalProperties": false
+          },
+          "expires_in_minutes": {
+            "type": "integer",
+            "description": "How long the request stays open, 1 to 60 minutes. Default 10."
+          }
+        },
+        "required": [
+          "name",
+          "reason",
+          "policy"
+        ],
+        "additionalProperties": false
+      },
+      "name": "request_secret"
+    },
+    {
+      "_meta": {
+        "ui": {
+          "resourceUri": "ui://secrethandoff/card.html"
+        }
+      },
+      "annotations": {
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": true,
+        "readOnlyHint": false
+      },
+      "description": "Run one command with secrets in its environment after human approval, in the browser or an owner-enabled Claude Code permission prompt. Use it only when a program must read a secret from its environment; prefer http_request. Pass an explicit absolute dir for client approval. A command that holds a secret can send it anywhere; its network policy is not enforced. Returns the exit code and the output with every secret value removed. Calling again with the same arguments rejoins an open approval.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            },
+            "description": "The program and its arguments, one item each. No shell is used, so pipes and variables are not expanded. Standard input is empty."
+          },
+          "secrets": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            },
+            "description": "Secrets for the command's environment, each as NAME:ENV_VAR, for example DB_PASSWORD:PGPASSWORD."
+          },
+          "dir": {
+            "type": "string",
+            "description": "Working folder. Default is the folder where the MCP server started."
+          },
+          "timeout_seconds": {
+            "type": "integer",
+            "description": "1 to 600 seconds. Default 60."
+          }
+        },
+        "required": [
+          "command",
+          "secrets"
+        ],
+        "additionalProperties": false
+      },
+      "name": "run_with_secret"
+    },
+    {
+      "_meta": {
+        "ui": {
+          "resourceUri": "ui://secrethandoff/card.html"
+        }
+      },
+      "description": "Wait for an existing request by name. Cannot open a page or change policy. Returns lifecycle state within the configured timeout.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The secret name."
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false
+      },
+      "name": "wait_for_secret"
+    }
+  ]
+}

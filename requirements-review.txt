@@ -1,0 +1,2 @@
+# Official JSON Schema checks for distribution preparation.
+jsonschema==4.25.1

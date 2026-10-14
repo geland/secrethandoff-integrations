@@ -1,0 +1,5 @@
+interface:
+  display_name: "Secret Handoff"
+  short_description: "Give your agent secrets without the chat"
+  brand_color: "#3154E8"
+  default_prompt: "Use $secrethandoff to get the API key this task needs without asking me to paste it."

@@ -1,0 +1,16 @@
+{
+  "name": "secrethandoff",
+  "owner": {
+    "name": "Greg Eland",
+    "url": "https://gregeland.com",
+    "email": "hello@gregeland.com"
+  },
+  "plugins": [
+    {
+      "name": "secrethandoff",
+      "source": "./",
+      "description": "Let your agent use temporary secrets without seeing them."
+    }
+  ],
+  "description": "Secret Handoff tools and guidance for AI agents."
+}

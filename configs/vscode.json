@@ -1,0 +1,11 @@
+{
+  "servers": {
+    "secrethandoff": {
+      "type": "stdio",
+      "command": "secrethandoff",
+      "args": [
+        "mcp"
+      ]
+    }
+  }
+}

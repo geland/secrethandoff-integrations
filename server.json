@@ -1,0 +1,64 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "description": "Give secrets to AI agents without the value entering the chat.",
+  "name": "com.secrethandoff/secrethandoff",
+  "packages": [
+    {
+      "fileSha256": "bad9755505bcd6637656f7a398cb1bd9b8e8e03c4c4f7f32c108227eae7d24d9",
+      "identifier": "https://github.com/geland/secrethandoff/releases/download/cli-v0.0.1/secrethandoff_0.0.1_darwin_amd64.mcpb",
+      "registryType": "mcpb",
+      "transport": {
+        "type": "stdio"
+      },
+      "version": "0.0.1"
+    },
+    {
+      "fileSha256": "a63dab234cc590b064fbf6165f1ac0b01704a53ec54bfbff96fecb22d2e4a1a7",
+      "identifier": "https://github.com/geland/secrethandoff/releases/download/cli-v0.0.1/secrethandoff_0.0.1_darwin_arm64.mcpb",
+      "registryType": "mcpb",
+      "transport": {
+        "type": "stdio"
+      },
+      "version": "0.0.1"
+    },
+    {
+      "fileSha256": "282482114bd6ae7e5c94b78756cc21d38f87163f44260c7a6429c3435e2693fb",
+      "identifier": "https://github.com/geland/secrethandoff/releases/download/cli-v0.0.1/secrethandoff_0.0.1_linux_amd64.mcpb",
+      "registryType": "mcpb",
+      "transport": {
+        "type": "stdio"
+      },
+      "version": "0.0.1"
+    },
+    {
+      "fileSha256": "b1c787b2384f265f038f642cfc12c4cade31ddc777eff4aea7435e138e014230",
+      "identifier": "https://github.com/geland/secrethandoff/releases/download/cli-v0.0.1/secrethandoff_0.0.1_linux_arm64.mcpb",
+      "registryType": "mcpb",
+      "transport": {
+        "type": "stdio"
+      },
+      "version": "0.0.1"
+    },
+    {
+      "fileSha256": "6a892520352ebc2e481967b16dfb78a712439caa1d0a5f0dd0f8a2a8dc1df92e",
+      "identifier": "https://github.com/geland/secrethandoff/releases/download/cli-v0.0.1/secrethandoff_0.0.1_windows_amd64.mcpb",
+      "registryType": "mcpb",
+      "transport": {
+        "type": "stdio"
+      },
+      "version": "0.0.1"
+    },
+    {
+      "fileSha256": "00fbfd97b74b05a802188ffc51d0d6550492e254ad3e6675cc96370846729e39",
+      "identifier": "https://github.com/geland/secrethandoff/releases/download/cli-v0.0.1/secrethandoff_0.0.1_windows_arm64.mcpb",
+      "registryType": "mcpb",
+      "transport": {
+        "type": "stdio"
+      },
+      "version": "0.0.1"
+    }
+  ],
+  "title": "Secret Handoff",
+  "version": "0.0.1",
+  "websiteUrl": "https://secrethandoff.com/agents"
+}
