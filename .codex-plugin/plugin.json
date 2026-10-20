@@ -25,7 +25,7 @@
   "interface": {
     "displayName": "Secret Handoff",
     "shortDescription": "Use secrets without seeing",
-    "longDescription": "Give your agent access with a sealed secret. Secret Handoff opens a private browser page for a password, token, or one-time code. You approve where it can be used; the local tool keeps the value in memory and out of the AI\u2019s context. No vault or Secret Handoff account is required. This release supports local handoffs through the signed 0.0.1 binary over stdio MCP. Install the binary first. Secrets remain until forgotten or the tool exits. Approved APIs receive the value, and an approved command can leak it. Browser command approval is the default. Phone and remote relay handoffs are not enabled on the public service.",
+    "longDescription": "Give your agent access with a sealed secret. Secret Handoff opens a private browser page for a password, token, or one-time code. You approve where it can be used; the local tool keeps the value in memory and out of the AI\u2019s context. No vault or Secret Handoff account is required. This release supports local handoffs through the signed local binary over stdio MCP. Install the binary first. Secrets remain until forgotten or the tool exits. Approved APIs receive the value, and an approved command can leak it. Browser command approval is the default. Owners can opt into supported Claude Code prompts or Codex approval settings, which may authorize automatically. Grouped local requests collect 2\u20138 credentials together. Phone and remote relay handoffs are not enabled on the public service.",
     "developerName": "Greg Eland",
     "category": "Developer Tools",
     "websiteURL": "https://secrethandoff.com",
@@ -66,13 +66,13 @@
               "description": "Forget access when the task is done.",
               "prompt": "We are done with API_KEY. Forget it now.",
               "tools_triggered": "forget_secret",
-              "expected_behavior": "Removes only the named secret and confirms its removal without displaying a value."
+              "expected_behavior": "Removes the named secret and confirms without displaying values. If the name belongs to a group, erases the whole group."
             },
             {
-              "description": "Use a command only with human approval.",
+              "description": "Use a command only through the owner-selected approval boundary.",
               "prompt": "Run psql -c \"select 1\" with the ready DB_PASSWORD in PGPASSWORD.",
               "tools_triggered": "run_with_secret",
-              "expected_behavior": "Passes an argument vector and named environment mapping. Runs only after human approval on the local page. Does not expose the value or claim the child process cannot leak it."
+              "expected_behavior": "Passes an argument vector, named environment mapping, and absolute working directory. Uses browser approval by default; only an owner opt-in permits supported Claude Code prompts or Codex host policy. Does not expose values or claim the child cannot leak them."
             }
           ],
           "negative": [

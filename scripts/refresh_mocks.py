@@ -34,7 +34,7 @@ def main():
     (MOCKS / '_instructions.txt').write_text(found[1]['instructions'] + '\n')
     (MOCKS / '_tools.json').write_text(json.dumps(found[2], indent=2))
     names = sorted(t['name'] for t in found[2]['tools'])
-    missing = [n for n in names if not (MOCKS / f'{n}.md').exists()]
+    missing = [n for n in names if not any((MOCKS / f'{n}{suffix}').exists() for suffix in ('.md', '.json'))]
     print(f'{len(names)} tools: {", ".join(names)}')
     if missing:
         sys.exit(f'add a mock response file for: {", ".join(missing)}')

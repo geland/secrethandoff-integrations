@@ -105,3 +105,72 @@ verdict about the approval flag. Interactive approve/deny and exclusion of agent
 UI automation remain acceptance requirements before owner opt-in. No installed
 plugin, user configuration, or sign-in state was changed. See the main
 repository's `docs/plans/host-command-approval-check.md`.
+
+
+## Codex, 2026-10-09: owner-policy native approval
+
+Added the explicit Codex opt-in under ADR 0014. Browser remains the default;
+Codex follows owner tool policy, reviewer, and hooks, including automatic
+authorization. The binary identifies this as `client_policy` / `host_policy`,
+not a human click. Shared guidance and mock descriptions were refreshed.
+
+- Project rules: **22/22 (100%)**, `evals/results/codex-rules-1791583716.json` (ignored).
+- MCP only: **19/22 (86%)**, `evals/results/codex-mcp-only-1791583462.json` (ignored).
+- Both arms passed command use with absolute directory, reuse, waiting, and
+  forgetting. Each arm ran once with the existing isolated harness/model.
+- MCP-only `aws-key-pasted-context` and `user-offers-paste` missed
+  `request_secret`. Both discouraged chat pasting. `forget-after` is a no-paste
+  regex false positive: it requested a Mailgun domain/region, then offered to
+  request a key through Secret Handoff. Keep the scored total unchanged.
+  MCP-only remains below the harness's 90% threshold, as in the preceding run.
+
+The real Codex 0.155.1 harmless policy probe passed: allow delivered tools/call;
+prompt plus never denied it before delivery. A separate installed-plugin check
+recorded only the public native-mode setting and completed an empty list call.
+It caught Codex reading `mcp.json` rather than `.mcp.json`; the owner opt-in helper
+now validates and updates both cached layouts. Four helper regression tests pass.
+The owner-authorized binary install and plugin reload preserve host policies,
+reviewer, and hooks. A fresh desktop chat still needs the owner's dummy UI test.
+
+Go vet, race/real-process leaks in browser/Claude/Codex modes, lint, TypeScript,
+production build/tests, fresh-D1 integration, and both card suites passed.
+Offline manifest validation passed; official online schemas were skipped.
+No secret or command was used in either real-host probe, and no init ran.
+
+
+## Codex, 2026-10-15: grouped local credential requests
+
+Added `request_secrets` for 2–8 named fields on one local form, with shared policy,
+atomic publication, and group cancellation/erasure. Refreshed nine tool mocks and
+all four guidance surfaces. Added `grouped-login`, which requires one grouped
+request, no single requests, HTTP use of both fields, and group forgetting.
+
+- Project rules: **20/23 (87%)**, `evals/results/codex-rules-1792104286.json` (ignored).
+- MCP only: **18/23 (78%)**, `evals/results/codex-mcp-only-1792104289.json` (ignored).
+- **Grouped-login passed every grader in both arms.** Each arm ran once using
+  the existing isolated harness/model. Mock requests contain no real credentials.
+- All three rules-arm failures (AWS, Jira, Twilio) used `request_secrets`, but
+  their existing positive graders count only `request_secret`. Jira and Twilio
+  do the same in MCP-only. These literal tool assertions reject grouped calls
+  before testing their input pattern. Preserve the raw scores; do not infer full
+  policy correctness from the tool-name trace alone.
+- MCP-only also missed handoff calls in AWS, Slack, and user-offers-paste. The
+  Slack final requested a secure channel and explicitly discouraged chat pasting,
+  which triggered the existing no-paste regex. These model misses remain open.
+  Both raw scores are below the runner's 90% threshold.
+
+Functional validation passed: Go vet/race and real-binary raw-transport leaks for
+both grouped values, atomic store publication, invalid/partial submission,
+member/group forget, fill/cancel races, superseded pages, 8-field support,
+headless/phone refusal, and two-value command redaction. Lint, TypeScript,
+production tests and fresh-D1 integration passed. Group form and both card suites
+passed. Synthetic Chrome desktop/mobile QA verified masked fields, polling
+preservation, one submit, and cleared input buffers. No protected fill page or
+real credential was used for browser automation.
+
+Installed the grouped binary, reloaded the local Codex plugin, and restored the
+existing cached approval-mode overrides exactly. Only the skill/card assets were
+refreshed in Claude's existing cache; its launch files were untouched. Host approval
+policies, reviewer, and hooks were unchanged. Concurrent approval implementation
+files were preserved. Fresh-chat owner UI acceptance remains to be done.
+Offline plugin validation passed; official online schemas were not checked.

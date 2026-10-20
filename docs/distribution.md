@@ -1,5 +1,11 @@
 # Distribution status
 
+The 0.0.2 candidate adds grouped credentials and opt-in host approval. Publication
+is pending the signed CLI artifacts and their verified import. See
+[the 0.0.2 preparation checklist](distribution-0.0.2.md).
+
+## Previous release
+
 Release scope, October 14, 2026: Claude Code and Codex repository plugins for
 signed binary 0.0.1, with local fill and browser command approval by default.
 The public source is `geland/secrethandoff-integrations`; binary downloads are

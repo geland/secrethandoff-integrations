@@ -60,3 +60,12 @@ test('command cards show execution outcomes when compatibility text is absent', 
   for (const [state,tone] of [['command_pending','wait'],['command_denied','stop'],['command_expired','stop'],['command_cancelled','stop'],['command_not_started','error']]) assert.equal(read({status:state,executed:false},state==='command_not_started').tone,tone);
   assert.match(read({status:'command_not_started',message:'Missing executable.'},true).text,/Missing executable/);
 });
+
+
+test('grouped request cards show names and retain status-only behavior', () => {
+  assert.equal(toolKind('mcp__plugin_secrethandoff_secrethandoff__request_secrets'), 'request_secrets');
+  const card=cardOf('request_secrets',{name:'LOGIN',reason:'Test',policy:{hosts:['api.example.com']},secrets:[{name:'USERNAME',label:'Username'},{name:'PASSWORD',label:'Password'}]},{tone:'wait',text:'Waiting.'});
+  assert.equal(card.title,'LOGIN');
+  assert.equal(card.rows.find(r=>r.label==='Fields').value,'USERNAME, PASSWORD');
+  assert.equal(statusOf('request_secrets',false,false,false,'All secrets are ready.').tone,'ok');
+});

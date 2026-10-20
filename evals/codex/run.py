@@ -76,7 +76,7 @@ def main():
                    '-c', f'mcp_servers.secrethandoff.args=["{server}"]',
                    '-c', f'mcp_servers.secrethandoff.env={{MOCK_LOG="{log}", EVAL_CASE_DIR="{case}"}}',
                    '-o', str(out), prompt]
-            for tool in ['request_secret', 'wait_for_secret', 'http_request', 'run_with_secret', 'list_secrets', 'forget_secret', 'proxy_settings', 'confirm_secret']:
+            for tool in ['request_secret', 'request_secrets', 'wait_for_secret', 'http_request', 'run_with_secret', 'list_secrets', 'forget_secret', 'proxy_settings', 'confirm_secret']:
                 cmd[2:2] = ['-c', f'mcp_servers.secrethandoff.tools.{tool}.approval_mode="approve"']
             cmd[2:2] = ['-c', 'mcp_servers.secrethandoff.startup_timeout_sec=30']
             for name in other_mcp_servers():
