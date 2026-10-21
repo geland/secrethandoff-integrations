@@ -1,8 +1,12 @@
 # 0.0.2 integration update and community distribution
 
-Prepared October 20, 2026. This is a release checklist, not a publication record.
+Prepared October 20, 2026. CLI `cli-v0.0.2` is published and the companion plugin
+is pinned to its verified signed artifacts. Clean public installations and
+0.0.1 upgrades passed for both clients in isolated profiles. See
+[the release record](releases/0.0.2.md) for evidence and remaining UI acceptance.
+The community distribution queue below remains a plan, not submitted listings.
 
-## Verified starting point
+## Verified starting point before publication
 
 - Public CLI latest: `geland/secrethandoff`, `cli-v0.0.1`.
 - Public integrations latest: `geland/secrethandoff-integrations`, `v0.0.1`,
@@ -64,8 +68,7 @@ codex plugin add secrethandoff@secrethandoff
 ```
 
 Restart affected client sessions and verify both binary and cached plugin
-versions. These commands must be exercised against the actual 0.0.2 release
-before being presented as a completed upgrade test. Users pinned to `v0.0.1`
+versions. These commands passed against public 0.0.2 in isolated profiles. Users pinned to `v0.0.1`
 must deliberately change their marketplace ref to `v0.0.2` or a tracking branch.
 Do not silently remove a user's pin.
 
