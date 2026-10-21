@@ -19,7 +19,7 @@ See `docs/releases/0.0.2.md` for preceding clean-install/upgrade evidence.
 | mcpservers.org | Prepared; not submitted | https://mcpservers.org/submit has a free route. Automatic approval review blocked transmission of `hello@gregeland.com`; the explicit permission question remains unanswered. Do not retry through any route before owner approval. |
 | PulseMCP | Intake paused | https://www.pulsemcp.com/submit says submissions/changes are paused and points publishers to the Official MCP Registry. No submission. |
 | mcp.so | Outside free queue | https://mcp.so/submit?type=server offers a $39 paid submission. No payment or submission. |
-| Grok community discovery | Local-host suitability not yet established | Grok Build documents stdio, but this does not establish Grok Bot directory/host acceptance. No hosted bridge, new vendor application, or compatibility claim. |
+| Grok community discovery | Deferred; required Grok Bot end-to-end proof is missing | Current CONTRIBUTING.md rule G2 requires having run it end to end, and section 5 defines plugins as tools a Grok Bot connects to. Official Grok Bot docs describe a hosted computer and separately approved local commands, not a verified local MCP/private-browser installation. No existing Secret Handoff PR was found. Grok Build stdio support is insufficient proof. No submission or bridge. |
 
 ## Separate multiplatform bundle
 
@@ -88,3 +88,21 @@ https://github.com/cursor/community-plugins#contributing,
 https://smithery.ai/docs/build/publish, https://smithery.ai/future,
 https://github.com/modelcontextprotocol/mcpb/blob/main/MANIFEST.md,
 https://github.com/modelcontextprotocol/registry/blob/main/docs/modelcontextprotocol-io/github-actions.mdx.
+
+## Follow-up at 2026-10-21 02:01 UTC
+
+Cline PR #307 remains open without reviews. The owner-approved Glama sign-in
+still shows GitHub's disabled Authorize button; the human handoff remains open.
+The contact-email approval for mcpservers.org remains unanswered; no retry was
+made. Indexing was checked shortly before this wake and was not polled again.
+
+Grok discovery was investigated against the actual directory's
+[submission rulebook](https://github.com/ZeroPointRepo/GrokBotDev/blob/main/CONTRIBUTING.md),
+including G2 and section 5, and the official
+[computer/app model](https://docs.x.ai/grok-bot/computer-and-apps).
+That documentation describes a persistent cloud computer, account-wide
+connectors, and separately approved local commands. It does not verify our local
+stdio/private-browser path in Grok Bot. A Grok Build CLI check would not meet the
+missing Grok Bot acceptance boundary. Defer this route until an actual supported
+host installation and end-to-end private flow can be demonstrated; do not retry
+with a hosted bridge or submit the unrelated Grok Build compatibility claim.
