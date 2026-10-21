@@ -26,6 +26,8 @@ with tempfile.TemporaryDirectory(prefix='secrethandoff-bundle-') as folder:
         archive.extractall(root)
         for entry in archive.infolist():
             (root / entry.filename).chmod((entry.external_attr >> 16) & 0o777)
+    for name in ('server/launch.cjs', 'release-lock.json', 'LICENSE'):
+        assert b'\r\n' not in (root / name).read_bytes(), 'Packaged text must use LF on every runner'
     manifest = json.loads((root / 'manifest.json').read_text())
     index = json.loads((root / 'server/binaries.json').read_text())
     lock = json.loads((ROOT / 'release-lock.json').read_text())

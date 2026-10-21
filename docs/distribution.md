@@ -37,7 +37,8 @@ in `geland/secrethandoff`. The newer Codex native-approval experiment is exclude
 | Cline Marketplace | [PR #307](https://github.com/cline/marketplace/pull/307) submitted; maintainer review pending |
 | Cursor Directory | [Submitted](https://cursor.directory/plugins/secret-handoff); direct page available, search indexing and scan acceptance unconfirmed |
 | Glama | Approved public page; ownership claim and search quality checks pending |
-| MCP Registry and Smithery | Not published; multiplatform bundle candidate in validation, publisher verification remains |
+| MCP Registry | Not published; multiplatform bundle PR #2, publisher verification remains |
+| Smithery | Held pending local-bundle eligibility after announced October 31 API/CLI shutdown |
 | mcpservers.org | Free submission prepared; contact-email approval pending |
 | PulseMCP / mcp.so | Intake paused / paid submission, respectively |
 | Homebrew, Scoop, winget | Separate binary distribution work; not published here |
