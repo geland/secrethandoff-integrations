@@ -17,7 +17,8 @@ These are repository plugins, not claims of vendor-curated directory approval.
 
 [Download and install the local tool](https://secrethandoff.com/download) first.
 Choose binary **0.0.2**. The website installer verifies its archive checksum and
-runs `secrethandoff setup` for Claude Code and Codex when their CLIs are on PATH.
+installs the binary. Run `secrethandoff setup` below to connect Claude Code and
+Codex when their CLIs are on PATH.
 
 ```sh
 secrethandoff version
