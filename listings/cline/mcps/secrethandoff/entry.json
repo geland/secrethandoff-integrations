@@ -4,7 +4,7 @@
   "type": "mcp",
   "name": "Secret Handoff",
   "tagline": "Let agents use credentials for approved API requests without receiving their values.",
-  "description": "Let agents use temporary secrets through the local Secret Handoff tool without receiving the values. Install the 0.0.1 binary first. Local fill only; phone and remote relay are not enabled on the public service.",
+  "description": "Let agents use temporary secrets through the local Secret Handoff tool without receiving the values. Install the 0.0.2 binary first. Local fill only; phone and remote relay are not enabled on the public service.",
   "author": {
     "name": "Greg Eland",
     "url": "https://gregeland.com"

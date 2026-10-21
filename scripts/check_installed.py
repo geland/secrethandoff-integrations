@@ -44,7 +44,7 @@ try:
     assert init['serverInfo']['version'] == lock['version']
     send({'jsonrpc': '2.0', 'method': 'notifications/initialized'})
     tools = call(2, 'tools/list', {})['tools']
-    assert {t['name'] for t in tools} == {'request_secret','wait_for_secret','list_secrets','forget_secret','http_request','proxy_settings','run_with_secret','confirm_secret'}
+    assert {t['name'] for t in tools} == {'request_secret','request_secrets','wait_for_secret','list_secrets','forget_secret','http_request','proxy_settings','run_with_secret','confirm_secret'}
     listed = call(3, 'tools/call', {'name':'list_secrets','arguments':{}})
     assert not listed.get('isError')
     forgotten = call(4, 'tools/call', {'name':'forget_secret','arguments':{'name':'INSTALL_CHECK_UNUSED'}})
@@ -57,7 +57,7 @@ finally:
     except subprocess.TimeoutExpired:
         proc.kill(); proc.wait()
     selector.close()
-print('Installed launch: 0.0.1, eight tools, empty store, missing-secret refusal, browser approval default')
+print(f'Installed launch: {lock["version"]}, nine tools, empty store, missing-secret refusal, browser approval default')
 hooks = json.loads((root / 'hooks/hooks.json').read_text())
 for module in hooks['modules']: assert (root / 'hooks' / module).is_file()
 # Deliberately synthetic test markers, generated in memory and never printed.

@@ -50,7 +50,7 @@ function markSvg(appearance: Appearance): string {
 
 // Plugin tools are named mcp__plugin_<plugin>_<server>__<tool>; a server
 // added by hand is mcp__<server>__<tool>.
-const TOOL = /^mcp__(?:plugin_secrethandoff_)?secrethandoff__(request_secret|wait_for_secret|run_with_secret|confirm_secret)$/
+const TOOL = /^mcp__(?:plugin_secrethandoff_)?secrethandoff__(request_secret|request_secrets|wait_for_secret|run_with_secret|confirm_secret)$/
 
 export type Tone = 'wait' | 'ok' | 'stop' | 'error'
 export type Status = { tone: Tone; text: string; code?: string }
@@ -130,7 +130,7 @@ export function statusOf(kind: string, isRunning: boolean, isErrored: boolean, i
     case 'missing': return { tone: 'stop', text: 'No request or secret exists with this name.' }
     case 'error': return { tone: 'error', text: firstSentence(text) || 'The call failed.' }
   }
-  if (/ is ready\./.test(text)) return { tone: 'ok', text: 'Ready. The agent uses the secret by name and never sees it.' }
+  if (/ (?:is|are) ready\./.test(text)) return { tone: 'ok', text: 'Ready. The agent uses the secret by name and never sees it.' }
   if (/confirmation code/.test(text)) return { tone: 'wait', text: 'Filled. Read the confirmation code on your page to the agent.' }
   if (/has no browser/.test(text) || /agent client is showing a page/.test(text)) {
     return { tone: 'wait', text: 'Open the link on your phone or another computer. Continue only if it shows this pairing code.', code: pairing }
@@ -197,6 +197,7 @@ export function cardOf(kind: string, input: Record<string, unknown>, status: Sta
   return {
     title: str(input.name) || 'Secret request',
     rows: [
+      ...(kind === 'request_secrets' ? [{ label: 'Fields', value: Array.isArray(input.secrets) ? input.secrets.map(f => f && typeof f === 'object' ? str((f as Record<string, unknown>).name) : '').join(', ') : '', style: 'mono' as const }] : []),
       { label: 'Reason', value: str(input.reason) ? `“${str(input.reason)}”` : '(no reason given)', style: 'reason' },
       { label: 'Can go to', value: policyLine(input.policy) },
     ],
@@ -329,7 +330,7 @@ export const register: Register = on => {
   // can show it while the transcript row may be folded away.
   on('tool.call', async ($, e, next) => {
     const kind = toolKind(e.tool)
-    if (kind !== 'request_secret' && kind !== 'wait_for_secret' && kind !== 'run_with_secret') return next(e)
+    if (kind !== 'request_secret' && kind !== 'request_secrets' && kind !== 'wait_for_secret' && kind !== 'run_with_secret') return next(e)
     const args = e as unknown as Record<string, unknown>
     const key = e.tool_use_id ?? `call-${nextKey++}`
     waiting.set(key, {
@@ -437,7 +438,7 @@ export const register: Register = on => {
   // result block is not drawn again. Command output (run_with_secret) stays.
   on('ui.render', { component: 'ToolResult' }, async ($, e, next) => {
     const kind = toolKind(e.props.tool)
-    if (kind !== 'request_secret' && kind !== 'wait_for_secret' && kind !== 'confirm_secret') return next(e)
+    if (kind !== 'request_secret' && kind !== 'request_secrets' && kind !== 'wait_for_secret' && kind !== 'confirm_secret') return next(e)
     if (e.props.isErrored) return next(e)
     const { Box } = $.ui.resolve(e)
     return <Box key="none" />

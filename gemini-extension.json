@@ -1,6 +1,6 @@
 {
   "name": "secrethandoff",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Let agents use credentials for approved API requests without receiving their values.",
   "mcpServers": {
     "secrethandoff": {

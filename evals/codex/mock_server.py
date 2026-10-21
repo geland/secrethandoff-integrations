@@ -51,6 +51,8 @@ for line in sys.stdin:
         with open(os.environ['MOCK_LOG'], 'a') as log:
             log.write(json.dumps({'tool': name, 'input': args}) + '\n')
         result = answer(name, args)
+        if name == 'request_secrets' and isinstance(result, dict) and result.get('structuredContent', {}).get('status') == 'ready':
+            result['structuredContent']['names'] = [f['name'] for f in args.get('secrets', [])]
         reply(i, result if isinstance(result, dict) else {'content': [{'type': 'text', 'text': result}]})
     elif i is not None:
         sys.stdout.write(json.dumps({'jsonrpc': '2.0', 'id': i, 'error': {'code': -32601, 'message': 'not found'}}) + '\n')

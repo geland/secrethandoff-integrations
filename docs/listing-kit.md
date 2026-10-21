@@ -8,11 +8,11 @@ repository plugins described in [distribution status](distribution.md).
 - Description: Let your agent use temporary secrets without seeing them. No vault to configure.
 - Website: https://secrethandoff.com
 - Source: https://github.com/geland/secrethandoff-integrations
-- Binary: https://github.com/geland/secrethandoff/releases/tag/cli-v0.0.1
+- Binary: https://github.com/geland/secrethandoff/releases/tag/cli-v0.0.2
 - Support: hello@gregeland.com
 - Icon: `assets/icon.svg`, the Clear Passage H mark
 - Transport: local stdio, `secrethandoff mcp`
-- Prerequisite: install the signed 0.0.1 binary and make it available on PATH
+- Prerequisite: install the signed 0.0.2 binary and make it available on PATH
 
 The local tool requests a password, token, or one-time code in a private browser
 page, shows its use policy, and lets the agent use it by reference. Values remain

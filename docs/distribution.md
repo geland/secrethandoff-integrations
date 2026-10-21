@@ -1,5 +1,13 @@
 # Distribution status
 
+Release scope, October 20, 2026: Claude Code and Codex repository plugins for
+signed CLI 0.0.2, including grouped local requests and owner opt-in host approval.
+Browser command approval remains the distribution default. See
+[0.0.2 release checks](releases/0.0.2.md) and the
+[upgrade and distribution checklist](distribution-0.0.2.md).
+
+## Previous release
+
 Release scope, October 14, 2026: Claude Code and Codex repository plugins for
 signed binary 0.0.1, with local fill and browser command approval by default.
 The public source is `geland/secrethandoff-integrations`; binary downloads are

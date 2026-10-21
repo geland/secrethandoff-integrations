@@ -5,7 +5,7 @@ description: Get and use passwords, API keys, tokens, and other credentials with
 
 # Secret Handoff
 
-The secrethandoff MCP server asks the user for a secret through a page in their own browser. You never see the value. You use the secret by name, and the server sends it only where its policy allows.
+Secret Handoff collects credentials in the user’s browser. Use them by name; never read their values. HTTP/proxy tools enforce the approved policy.
 
 ## When you need a credential
 
@@ -14,13 +14,19 @@ The secrethandoff MCP server asks the user for a secret through a page in their 
 3. The call waits for the human up to the configured time limit. If `status` is `pending`, call `wait_for_secret` with the name; it waits without opening another page or changing the policy. Repeat while pending. Older binaries can be rejoined by calling `request_secret` with the same arguments. Never ask for a secret in chat.
 4. Use the secret only when `status` is `ready`. For `confirmation_required`, ask for the confirmation code the human read on their remote page and call `confirm_secret`; never guess it. If the result is `declined`, `cancelled`, or `expired`, stop and ask how the user wants to continue. `missing` means no request exists; `error` means the operation failed. Prose remains available for older hosts.
 
+## Related credentials together
+
+For 2–8 related credentials (such as username and password), use `request_secrets`
+with a unique group `name`, `secrets: [{name, label}, ...]`, one `reason`, and one
+narrow `policy`. Group and field names must differ. One local form makes all fields ready together. Use each field by its own name.
+Wait using the group name. Forgetting the group or any member erases all members.
+Groups require a local browser; phone/headless relay fill is unsupported.
+
 ## Write a narrow policy
 
 - `hosts`: the exact API host, for example `api.stripe.com`. Use a wildcard (`*.example.com`) only when the task needs several subdomains.
 - `methods`: only the methods the task uses, for example `["GET"]`.
 - `paths`: only the paths the task uses, for example `["/v1/charges"]`.
-
-The user sees the policy before they give the secret. A narrow policy is easier to approve.
 
 ## Use a secret
 
@@ -28,18 +34,19 @@ Prefer the tools in this order:
 
 1. `http_request`: write `{{secret:NAME}}` in a header, the URL query, or the body, for example `"Authorization": "Bearer {{secret:STRIPE_KEY}}"`. You never hold the value.
 2. `proxy_settings`: when a tool such as `curl` or an SDK must make the request. Put the returned variables in front of that one command, and write `{{secret:NAME}}` where the secret goes.
-3. `run_with_secret`: when a program must read the secret from its environment. Pass separate arguments and an absolute `dir`; no shell runs and stdin is empty. The user approves every command in the browser or an owner-enabled Claude Code permission prompt. Never enable client approval mode yourself. The command can send the secret anywhere; prefer HTTP/proxy policy enforcement.
+3. `run_with_secret`: when a program must read the secret from its environment. Pass separate arguments and an absolute `dir`; no shell runs and stdin is empty. Follow the owner-selected approval mode: browser approval, Claude Code permission prompt, or Codex approval settings (including automatic approval). Codex results use `presentation: client_policy` and `approval: host_policy`; do not claim a human clicked. Enable client approval only when the user explicitly requests it. The command can send the secret anywhere; prefer HTTP/proxy policy enforcement.
 
 In a JSON body or a form body, `http_request` encodes the value for you. Write `{{secret:NAME}}` inside the JSON quotes, or after `name=` in a form.
 
 ### curl with `run_with_secret`
 
-When the task must use `curl`, let curl read the secret from its environment. Then the value is not in the command line, a file, or the chat. This needs curl 8.3 or later.
+curl 8.3+ can read credentials from the environment: import with `--variable
+%ENV_VAR` and use `--expand-header` or `--expand-data-urlencode`. Its expansion
+syntax is `{{ENV_VAR}}`, distinct from `{{secret:NAME}}`.
 
-- Import the variable with `--variable %ENV_VAR`.
-- Use it with an `--expand-` option and curl's `{{ENV_VAR}}` syntax. This is curl's syntax, not `{{secret:NAME}}`.
-
-Example: `command` is `["curl", "--variable", "%BG_PASS", "--expand-data-urlencode", "password={{BG_PASS}}", "https://app.example.com/login"]`, and `secrets` is `["BG_PASS:BG_PASS"]`. For a header, use `"--expand-header", "Authorization: Bearer {{API_TOKEN}}"`.
+Example argv: `["curl", "--variable", "%API_TOKEN", "--expand-header",
+"Authorization: Bearer {{API_TOKEN}}", "https://api.example.com/items"]`;
+secret binding: `["API_TOKEN:API_TOKEN"]`.
 
 ## Never
 
@@ -50,7 +57,8 @@ Example: `command` is `["curl", "--variable", "%BG_PASS", "--expand-data-urlenco
 
 ## Project rules
 
-`secrethandoff init` adds a short Secrets section to the project's `AGENTS.md` or `CLAUDE.md`, so that every agent in the project uses `request_secret`. After your first `request_secret` in a project that has no such section, tell the user this once. Run `secrethandoff init` in the project folder only if the user agrees.
+Offer `secrethandoff init` once if the project lacks Secrets guidance. Run it
+only with the user's consent. It adds a Secrets section to AGENTS.md or CLAUDE.md.
 
 ## Housekeeping
 
