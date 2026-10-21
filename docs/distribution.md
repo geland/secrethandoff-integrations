@@ -1,8 +1,10 @@
 # Distribution status
 
-The 0.0.2 candidate adds grouped credentials and opt-in host approval. Publication
-is pending the signed CLI artifacts and their verified import. See
-[the 0.0.2 preparation checklist](distribution-0.0.2.md).
+Release scope, October 20, 2026: Claude Code and Codex repository plugins for
+signed CLI 0.0.2, including grouped local requests and owner opt-in host approval.
+Browser command approval remains the distribution default. See
+[0.0.2 release checks](releases/0.0.2.md) and the
+[upgrade and distribution checklist](distribution-0.0.2.md).
 
 ## Previous release
 
