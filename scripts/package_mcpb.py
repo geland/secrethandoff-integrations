@@ -73,9 +73,9 @@ def build(directory, output):
     files.update({
         'manifest.json': (encode(manifest), 0o644),
         'server/binaries.json': (encode(index), 0o644),
-        'server/launch.cjs': ((ROOT / 'packaging/mcpb/launch.cjs').read_bytes(), 0o644),
-        'release-lock.json': ((ROOT / 'release-lock.json').read_bytes(), 0o644),
-        'LICENSE': ((ROOT / 'LICENSE').read_bytes(), 0o644),
+        'server/launch.cjs': ((ROOT / 'packaging/mcpb/launch.cjs').read_text(encoding='utf-8').encode('utf-8'), 0o644),
+        'release-lock.json': ((ROOT / 'release-lock.json').read_text(encoding='utf-8').encode('utf-8'), 0o644),
+        'LICENSE': ((ROOT / 'LICENSE').read_text(encoding='utf-8').encode('utf-8'), 0o644),
         'icon.png': ((ROOT / 'assets/icon.png').read_bytes(), 0o644),
     })
     output.parent.mkdir(parents=True, exist_ok=True)
