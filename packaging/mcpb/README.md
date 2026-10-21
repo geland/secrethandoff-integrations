@@ -1,8 +1,8 @@
-# Multiplatform MCPB candidate
+# Multiplatform MCPB distribution
 
 This separate distribution package bundles the six unchanged binaries from
 `release-lock.json`. It does not rebuild, re-sign, replace, or attach new assets
-to the existing CLI or plugin releases. Publishing it is a separate step.
+to the existing CLI or plugin releases. It is published separately as `mcpb-v0.0.2`; the latest-plugin release pointer is unchanged.
 
 The MCPB host must provide Node.js 22 or newer. `server/launch.cjs` selects by
 Node's `process.platform` and `process.arch`, verifies the selected binary's
@@ -33,3 +33,20 @@ Apple notarization. These are bundle launch checks, not acceptance of private
 browser fill/approval UI in every MCPB host. No real credential or model task is
 used. Existing PATH-based plugin releases are unchanged and require no Node
 launcher.
+
+## Registry publication
+
+`registry-server.json` pins the separate public bundle and its exact checksum.
+It uses `io.github.geland/secrethandoff`, which GitHub Actions OIDC can verify
+from repository ownership. The unpublished domain-namespace listing metadata in the root
+`server.json` remains an immutable record of the original CLI bundles, not a
+second directory submission.
+
+The manually dispatched Registry workflow runs only on `main`, validates the
+metadata, downloads and verifies the public bundle plus a checksum-pinned
+publisher, reruns local stdio installation checks, and then authenticates using
+short-lived GitHub OIDC. It stores no permanent publisher secret and needs no
+DNS or production website change. No pull request can trigger publication.
+
+Validation evidence: all six artifacts from run `39529132802` have SHA-256
+`5086abb4a5f6b2ec3b9bb7c362da169ce121ac4153fe6f0bf89e98d4fe846824`.

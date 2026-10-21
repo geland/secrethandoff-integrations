@@ -1,0 +1,22 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.geland/secrethandoff",
+  "title": "Secret Handoff",
+  "description": "Let agents use temporary secrets without receiving their values in chat. Local stdio; Node 22+.",
+  "version": "0.0.2",
+  "websiteUrl": "https://secrethandoff.com",
+  "repository": {
+    "url": "https://github.com/geland/secrethandoff-integrations",
+    "source": "github"
+  },
+  "packages": [
+    {
+      "registryType": "mcpb",
+      "identifier": "https://github.com/geland/secrethandoff-integrations/releases/download/mcpb-v0.0.2/secrethandoff-multiplatform.mcpb",
+      "fileSha256": "5086abb4a5f6b2ec3b9bb7c362da169ce121ac4153fe6f0bf89e98d4fe846824",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}

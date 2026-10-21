@@ -116,6 +116,18 @@ if options.release or lock_path.exists():
 else:
     print('REVIEW ONLY: signed release metadata is not imported; this is not publish-ready')
 
+# The new Registry listing is separate from immutable CLI release metadata.
+registry_bundle = ROOT / 'packaging/mcpb/registry-server.json'
+if registry_bundle.exists():
+    entry = json.loads(registry_bundle.read_text())
+    assert entry['name'] == 'io.github.geland/secrethandoff' and not entry.get('remotes')
+    assert entry['version'] == lock['version'] and len(entry['packages']) == 1
+    bundle = entry['packages'][0]
+    assert bundle['registryType'] == 'mcpb' and bundle['transport'] == {'type': 'stdio'}
+    assert bundle['identifier'] == f"https://github.com/geland/secrethandoff-integrations/releases/download/mcpb-v{lock['version']}/secrethandoff-multiplatform.mcpb"
+    assert re.fullmatch(r'[a-f0-9]{64}', bundle['fileSha256'])
+    print('Separate Registry bundle contract passed')
+
 if options.offline:
     print('Official schema checks SKIPPED by --offline')
 else:
@@ -124,7 +136,7 @@ else:
         from referencing import Registry, Resource
     except ImportError as error:
         raise SystemExit('Official schema checks require requirements-review.txt; use --offline for local contracts only') from error
-    for name in ['plugin.json', 'mcp.json'] + (['server.json'] if lock_path.exists() else []):
+    for name in ['plugin.json', 'mcp.json'] + (['server.json'] if lock_path.exists() else []) + (['packaging/mcpb/registry-server.json'] if registry_bundle.exists() else []):
         value = json.loads((ROOT / name).read_text())
         with urllib.request.urlopen(value['$schema'], timeout=30) as response:
             jsonschema.validate(value, json.load(response))
