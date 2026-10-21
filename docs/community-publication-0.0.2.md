@@ -14,8 +14,8 @@ checked the downloaded Apple Silicon archive hash and Apple notarization.
 | Gemini CLI gallery | Discovery enabled; indexing pending | Added `gemini-cli-extension` topic. Gemini CLI 0.65.0 installed v0.0.2 from the public GitHub release, discovered context and skill, and reported the stdio server Connected. The gallery search for `secrethandoff` returned no entries at 18:10 PDT; check again after the crawler runs. |
 | Cline Marketplace | Submitted, awaiting maintainer review | https://github.com/cline/marketplace/pull/307 adds only registry/mcps/secrethandoff/entry.json and icon.svg. Upstream validator passed 204 entries. Cline 3.0.73 installed the local MCP configuration in an isolated profile without warnings; `cline config mcp` confirms the server. |
 | Cursor Directory | Submitted, security scan pending | https://cursor.directory/plugins/secret-handoff shows the H logo, one MCP and one skill. Initially unpublished/hidden pending security scan. At 18:08 PDT the direct page rendered its install configuration without that warning, but directory search did not return Secret Handoff and anonymous HTTP verification was rate limited (429). Public indexing and scan acceptance remain unconfirmed. Removed the detected Claude-specific hook component before submitting. |
-| Glama | Approved; public page live; search checks pending | https://glama.ai/mcp/servers/geland/secrethandoff. Approval email received at 2026-10-21 01:10:41 UTC; page shows the public 0.0.2 README and Local classification. Claiming the listing and supplying Docker instructions are required for its automated checks/search indexing. Automatic approval review blocked the GitHub sign-in for claiming; owner permission is pending. |
-| Official MCP Registry | Not published; separate multiplatform candidate tested; publisher verification unresolved | Public registry search returned zero matches for `secrethandoff`. [Packaging PR #2](https://github.com/geland/secrethandoff-integrations/pull/2) adds explicit OS/CPU selection without replacing released assets. Domain namespace ownership still needs verification. |
+| Glama | Approved; public page live; search checks pending | https://glama.ai/mcp/servers/geland/secrethandoff. Approval email received at 2026-10-21 01:10:41 UTC; page shows the public 0.0.2 README and Local classification. Claiming the listing and supplying Docker instructions are required for its automated checks/search indexing. Owner has now approved GitHub sign-in to claim the listing; ownership setup is in progress. |
+| Official MCP Registry | Not published; separate multiplatform bundle published; Registry workflow prepared | Public registry search returned zero matches for `secrethandoff`. [Packaging PR #2](https://github.com/geland/secrethandoff-integrations/pull/2) adds explicit OS/CPU selection without replacing released assets. Use the GitHub-verified `io.github.geland/secrethandoff` namespace for the new listing through OIDC; no domain change or permanent publisher credential. Publication is still pending. |
 | Smithery | Held; local distribution after October 31 is unconfirmed | https://smithery.ai/future announces shutdown of accounts, API, CLI, and connection services on October 31, 2026. The continuing public directory is described around direct MCP URLs; local MCPB intake after the change is unconfirmed. Existing signed-in namespace is `gregaeland`; no upload or new credential. No hosted URL route was used. |
 | mcpservers.org | Prepared; not submitted | https://mcpservers.org/submit offers a free review. Automatic approval review blocked transmission of the requested contact email; owner approval is pending. No submission occurred. |
 | PulseMCP | Intake paused | https://www.pulsemcp.com/submit explicitly says new submissions and changes are paused. It points publishers to the Official MCP Registry for later discovery. |
@@ -84,3 +84,14 @@ Artifact comparison found only CRLF differences in three text files from Windows
 checkouts, with identical binary bytes. PR #2 normalizes packaged text and adds a
 regression assertion; the latest matrix must pass before publication. This is
 not a claim of registry or host installation acceptance.
+
+The final [native matrix 39529132802](https://github.com/geland/secrethandoff-integrations/actions/runs/39529132802)
+passed all six targets. All six output bundles are byte-identical with SHA-256
+`5086abb4a5f6b2ec3b9bb7c362da169ce121ac4153fe6f0bf89e98d4fe846824`.
+[Separate bundle release](https://github.com/geland/secrethandoff-integrations/releases/tag/mcpb-v0.0.2)
+published from merged packaging source `6acbbe9f5ec5b419ba0d3406355d1cd86241632b`.
+The macOS binaries remain signed/notarized; the bundle ZIP is not signed.
+A source/test provenance record accompanies it, not a cryptographic attestation.
+The new Registry descriptor uses GitHub's verified namespace and pins this
+single bundle. The manually triggered OIDC workflow is prepared but has not yet
+published a Registry entry. Existing released metadata and tags are unchanged.

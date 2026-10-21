@@ -1,0 +1,59 @@
+name: Publish verified MCP bundle to Registry
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: mcp-registry-publication
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements-review.txt
+      - run: python scripts/validate.py --release
+      - name: Verify exact public bundle and pinned publisher
+        shell: python
+        run: |
+          import hashlib, json, urllib.request
+          from pathlib import Path
+          root=Path('dist')
+          root.mkdir(exist_ok=True)
+          server=json.loads(Path('packaging/mcpb/registry-server.json').read_text())
+          assert server['name']=='io.github.geland/secrethandoff'
+          package=server['packages'][0]
+          files=[(package['identifier'],package['fileSha256'],'secrethandoff-multiplatform.mcpb'),
+                 ('https://github.com/modelcontextprotocol/registry/releases/download/v1.8.1/mcp-publisher_linux_amd64.tar.gz',
+                  'a06c9096dcb9727c13555b6be26c7effa707b01f06a4c561ba7a3635443cf2cc','publisher.tar.gz')]
+          for url,expected,name in files:
+              with urllib.request.urlopen(url,timeout=60) as response:
+                  data=response.read()
+              assert hashlib.sha256(data).hexdigest()==expected, 'Download checksum mismatch'
+              (root/name).write_bytes(data)
+          import tarfile
+          with tarfile.open(root/'publisher.tar.gz') as archive:
+              member=archive.getmember('mcp-publisher')
+              assert member.isfile()
+              executable=root/'mcp-publisher'
+              executable.write_bytes(archive.extractfile(member).read())
+              executable.chmod(0o755)
+      - name: Verify public bundle installation over local stdio
+        run: python scripts/test_mcpb.py dist/secrethandoff-multiplatform.mcpb
+      - name: Authenticate with short-lived GitHub identity
+        run: ./dist/mcp-publisher login github-oidc
+      - name: Publish exact bundle metadata
+        run: ./dist/mcp-publisher publish packaging/mcpb/registry-server.json
