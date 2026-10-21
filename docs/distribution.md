@@ -35,8 +35,11 @@ in `geland/secrethandoff`. The newer Codex native-approval experiment is exclude
 | skills.sh | Public listing resolves; real isolated skill install passed |
 | Gemini CLI gallery | Discovery topic enabled; release install and MCP connection passed; indexing pending |
 | Cline Marketplace | [PR #307](https://github.com/cline/marketplace/pull/307) submitted; maintainer review pending |
-| Cursor Directory | [Submitted](https://cursor.directory/plugins/secret-handoff); hidden pending security scan |
-| MCP Registry, Smithery, Glama, other directories | Metadata prepared; not published |
+| Cursor Directory | [Submitted](https://cursor.directory/plugins/secret-handoff); direct page available, search indexing and scan acceptance unconfirmed |
+| Glama | Source-server intake submitted; confirmation received; review pending |
+| MCP Registry and Smithery | Not published; architecture selection and publisher verification remain |
+| mcpservers.org | Free submission prepared; contact-email approval pending |
+| PulseMCP / mcp.so | Intake paused / paid submission, respectively |
 | Homebrew, Scoop, winget | Separate binary distribution work; not published here |
 
 Phone/remote relay availability remains off on the public service. This local
