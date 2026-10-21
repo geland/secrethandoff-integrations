@@ -32,7 +32,10 @@ in `geland/secrethandoff`. The newer Codex native-approval experiment is exclude
 | Claude Code repository marketplace | Current release |
 | Codex repository marketplace | Current release |
 | Vendor-curated Claude/OpenAI directories | Not submitted or approved |
-| skills.sh, Gemini, Cline, Cursor | Drafts only; later host validation and publication |
+| skills.sh | Public listing resolves; real isolated skill install passed |
+| Gemini CLI gallery | Discovery topic enabled; release install and MCP connection passed; indexing pending |
+| Cline Marketplace | [PR #307](https://github.com/cline/marketplace/pull/307) submitted; maintainer review pending |
+| Cursor Directory | [Submitted](https://cursor.directory/plugins/secret-handoff); hidden pending security scan |
 | MCP Registry, Smithery, Glama, other directories | Metadata prepared; not published |
 | Homebrew, Scoop, winget | Separate binary distribution work; not published here |
 
@@ -48,3 +51,5 @@ MCP endpoint or third-party bridge is included.
 Both repository installations and vendor directory listings must report their
 actual status. A valid schema, a published ZIP, or an installed plugin does not
 by itself prove a completed human secret-entry workflow.
+
+Community publication evidence: [October 20 progress](community-publication-0.0.2.md).

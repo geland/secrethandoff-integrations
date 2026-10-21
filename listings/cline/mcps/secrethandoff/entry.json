@@ -3,8 +3,8 @@
   "id": "secrethandoff",
   "type": "mcp",
   "name": "Secret Handoff",
-  "tagline": "Let agents use credentials for approved API requests without receiving their values.",
-  "description": "Let agents use temporary secrets through the local Secret Handoff tool without receiving the values. Install the 0.0.2 binary first. Local fill only; phone and remote relay are not enabled on the public service.",
+  "tagline": "Temporary secrets for agents, kept out of chat.",
+  "description": "Let agents use temporary credentials without receiving their values in tool output. Secret Handoff opens a private local browser form showing the requested use policy. It holds secrets in process memory, applies them to approved API requests, and redacts responses. Related credentials can be entered together. Browser command approval is the default; approved commands receive the secret and can send it elsewhere. No Secret Handoff account or permanent vault is required. Phone and remote relay are disabled on the public service.",
   "author": {
     "name": "Greg Eland",
     "url": "https://gregeland.com"
@@ -26,6 +26,6 @@
       "secrethandoff",
       "mcp"
     ],
-    "notes": "Install the secrethandoff binary first and check secrethandoff version against the release lock. The skill supplies guidance; it does not install or connect the MCP server. No Secret Handoff account or service API key is required."
+    "notes": "Install the signed platform binary from https://secrethandoff.com/download first and ensure secrethandoff is on PATH. This entry connects its local stdio MCP server; it does not install the executable. Validated with CLI 0.0.2. No service API key is required. Secrets must be entered in the private browser form, never in chat."
   }
 }
