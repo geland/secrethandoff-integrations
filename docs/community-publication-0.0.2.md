@@ -14,8 +14,7 @@ checked the downloaded Apple Silicon archive hash and Apple notarization.
 | Gemini CLI gallery | Discovery enabled; indexing pending | Added `gemini-cli-extension` topic. Gemini CLI 0.65.0 installed v0.0.2 from the public GitHub release, discovered context and skill, and reported the stdio server Connected. The gallery search for `secrethandoff` returned no entries at 18:10 PDT; check again after the crawler runs. |
 | Cline Marketplace | Submitted, awaiting maintainer review | https://github.com/cline/marketplace/pull/307 adds only registry/mcps/secrethandoff/entry.json and icon.svg. Upstream validator passed 204 entries. Cline 3.0.73 installed the local MCP configuration in an isolated profile without warnings; `cline config mcp` confirms the server. |
 | Cursor Directory | Submitted, security scan pending | https://cursor.directory/plugins/secret-handoff shows the H logo, one MCP and one skill. Initially unpublished/hidden pending security scan. At 18:08 PDT the direct page rendered its install configuration without that warning, but directory search did not return Secret Handoff and anonymous HTTP verification was rate limited (429). Public indexing and scan acceptance remain unconfirmed. Removed the detected Claude-specific hook component before submitting. |
-
-| Glama | Submitted, awaiting review | Submitted through https://glama.ai/mcp/servers using its Runs from source form and https://github.com/geland/secrethandoff. Glama confirmation email received at 2026-10-21 01:05:08 UTC explicitly says Secret Handoff is pending review. No listing URL or approval yet; do not resubmit. |
+| Glama | Approved; public page live; search checks pending | https://glama.ai/mcp/servers/geland/secrethandoff. Approval email received at 2026-10-21 01:10:41 UTC; page shows the public 0.0.2 README and Local classification. Claiming the listing and supplying Docker instructions are required for its automated checks/search indexing. Automatic approval review blocked the GitHub sign-in for claiming; owner permission is pending. |
 | Official MCP Registry | Not published; package selection and publisher verification unresolved | Public registry search returned zero matches for `secrethandoff`. Released MCPB manifests constrain OS only, with separate ARM64/AMD64 files; current metadata does not establish reliable CPU selection. Preserve released hashes and tags. |
 | Smithery | Not published; bundle selection unresolved | Current Local (MCPB Bundle) documentation accepts one pre-built bundle as the latest local artifact. A single released architecture-specific file is insufficient for the advertised platform set. No hosted URL route was used. |
 | mcpservers.org | Prepared; not submitted | https://mcpservers.org/submit offers a free review. Automatic approval review blocked transmission of the requested contact email; owner approval is pending. No submission occurred. |
@@ -35,7 +34,8 @@ entry, approval, or status-card acceptance in those hosts.
    server.json contains six platform bundles without explicit architecture
    selectors. Resolve actual client selection and publisher namespace ownership
    before publication; do not infer platform compatibility from filenames.
-4. Watch the existing Glama review; do not submit again. Complete the prepared
+4. Complete Glama ownership/quality-check setup after the pending GitHub sign-in
+   permission. Do not submit again. Complete the prepared
    mcpservers.org free submission only after the pending contact-email approval.
    PulseMCP is paused and mcp.so is paid, so neither has an eligible action now.
 5. Record authenticated intake blockers precisely; never substitute a hosted
@@ -65,3 +65,18 @@ https://github.com/modelcontextprotocol/registry/blob/main/docs/reference/server
 The Registry documentation also describes custom-install metadata with a website
 link, but that is not a substitute for the plan's exact-artifact installation
 checks and has not been published here.
+
+### Separate multiplatform candidate
+
+A separate bundle candidate now packages the six unchanged 0.0.2 binaries with
+an OS/CPU selector. The Node launcher verifies the selected binary checksum and
+passes stdio directly to `secrethandoff mcp`. It performs no runtime download and
+requires Node 22+ in the bundle host. Existing CLI/plugin release assets and tags
+are unchanged. See `packaging/mcpb/README.md`.
+
+Local macOS x64 checks passed: Apple signature and notarization, MCP initialize,
+the exact nine tools, empty-secret status, missing-secret request refusal, clean
+stdin closure, and refusal of a modified binary before startup. Seven selector
+checks passed. MCPB CLI 2.1.2 accepted the manifest and existing H-brand PNG
+(a 512px icon is recommended, not required). Six native runner jobs are being
+prepared; this is not a claim of registry or host installation acceptance.
