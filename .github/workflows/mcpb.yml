@@ -1,0 +1,68 @@
+name: Validate multiplatform MCPB
+on:
+  pull_request:
+    paths: ['packaging/mcpb/**', 'scripts/*mcpb*', 'release-lock.json', 'assets/icon.png', '.github/workflows/mcpb.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  native:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {runner: macos-15, target: darwin-arm64}
+          - {runner: macos-15-intel, target: darwin-x64}
+          - {runner: ubuntu-24.04, target: linux-x64}
+          - {runner: ubuntu-24.04-arm, target: linux-arm64}
+          - {runner: windows-2025, target: win32-x64}
+          - {runner: windows-11-arm, target: win32-arm64}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 15
+    env:
+      EXPECTED_BUNDLE_TARGET: ${{ matrix.target }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Download exact published archives
+        shell: python
+        run: |
+          import hashlib, json, urllib.request
+          from pathlib import Path
+          directory=Path('dist/archives')
+          directory.mkdir(parents=True)
+          for a in json.loads(Path('release-lock.json').read_text())['archives']:
+              with urllib.request.urlopen(a['url'],timeout=60) as response:
+                  data=response.read()
+              assert hashlib.sha256(data).hexdigest()==a['sha256']
+              assert len(data)==a['bytes']
+              (directory/a['name']).write_bytes(data)
+      - run: node --test packaging/mcpb/launch.test.cjs
+      - run: python scripts/package_mcpb.py dist/archives
+      - run: python scripts/test_mcpb.py
+      - name: Extract public manifest and icon for schema validation
+        if: matrix.target == 'linux-x64'
+        shell: python
+        run: |
+          from pathlib import Path
+          from zipfile import ZipFile
+          root=Path('dist/schema')
+          root.mkdir()
+          with ZipFile('dist/secrethandoff-multiplatform.mcpb') as archive:
+              for name in ('manifest.json','icon.png'):
+                  (root/name).write_bytes(archive.read(name))
+      - name: Validate official MCPB manifest
+        if: matrix.target == 'linux-x64'
+        run: npx --yes @anthropic-ai/mcpb@2.1.2 validate dist/schema/manifest.json
+      - uses: actions/upload-artifact@v7
+        with:
+          name: mcpb-${{ matrix.runner }}
+          path: dist/secrethandoff-multiplatform.mcpb
+          retention-days: 14
