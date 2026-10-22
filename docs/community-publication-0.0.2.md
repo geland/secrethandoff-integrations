@@ -12,7 +12,7 @@ See `docs/releases/0.0.2.md` for preceding clean-install/upgrade evidence.
 | skills.sh | Public listing resolves | https://skills.sh/geland/secrethandoff-integrations/secrethandoff. Real Skills CLI installation in an isolated profile passed; installed guidance matched the release. |
 | Gemini CLI gallery | Installation verified; indexing pending | The `gemini-cli-extension` topic is enabled. Gemini CLI 0.65.0 installed public v0.0.2 and reported the local MCP Connected. Public gallery HTML had no `secrethandoff` or `Secret Handoff` reference at 18:54 PDT; earlier browser search also had none. |
 | Cline Marketplace | Submitted; maintainer review pending | https://github.com/cline/marketplace/pull/307 is OPEN, no reviews or merge as of this check. Upstream validator and isolated Cline 3.0.73 configuration installation passed. Do not resubmit. |
-| Cursor Directory | Direct page available; indexing/scan acceptance unconfirmed | https://cursor.directory/plugins/secret-handoff renders the H logo and local install configuration without the earlier hidden warning. Search `?q=secrethandoff` still did not return it at 18:54 PDT. No publication/indexing claim yet. |
+| Cursor Directory | Public listing indexed; scan acceptance unconfirmed | https://cursor.directory/plugins/secret-handoff. On October 22 at 20:20 UTC, the public directory search `?q=Secret%20Handoff` returned Secret Handoff as its first result, with the local stdio description and signed 0.0.2 installation requirement. This confirms directory discovery, not security-scan acceptance or interactive Cursor host acceptance. |
 | Official MCP Registry | Published; active 0.0.2 verified | `io.github.geland/secrethandoff`, published at 2026-10-21 01:53:47 UTC. Public API returned one matching active/latest entry and the exact separate bundle checksum. [Publication run](https://github.com/geland/secrethandoff-integrations/actions/runs/39529908141). |
 | Glama | Approved; public listing live; claim/search checks pending | https://glama.ai/mcp/servers/geland/secrethandoff. Approval email at 2026-10-21 01:10:41 UTC and public Local-classified page verified. Owner explicitly approved GitHub sign-in to claim it. GitHub's Authorize button stayed disabled after reload; browser handoff is pending. No repository write access was shown; read-only email access was shown. Do not resubmit. |
 | Smithery | Held; continuing local-bundle eligibility unconfirmed | https://smithery.ai/future announces October 31 shutdown of accounts, API, CLI, and connection services. The continuing directory is described around direct MCP URLs; local MCPB intake after the change is unconfirmed. Existing signed-in namespace is `gregaeland`; no upload, new credential, or hosted proxy. |
@@ -106,3 +106,19 @@ stdio/private-browser path in Grok Bot. A Grok Build CLI check would not meet th
 missing Grok Bot acceptance boundary. Defer this route until an actual supported
 host installation and end-to-end private flow can be demonstrated; do not retry
 with a hosted bridge or submit the unrelated Grok Build compatibility claim.
+
+## Follow-up at 2026-10-22 20:20 UTC
+
+[Cursor Directory search](https://cursor.directory/?q=Secret%20Handoff) now
+returns a first result linking to
+[Secret Handoff](https://cursor.directory/plugins/secret-handoff). The visible
+result describes temporary secrets kept out of chat, local stdio MCP, the signed
+0.0.2 binary installation prerequisite, and disabled phone/remote relay. This is
+direct browser evidence of public indexing. No new submission, configuration,
+release, or installed client was changed. Security-scan acceptance and interactive
+host use remain unverified.
+
+Cline PR #307 remains open with no comments, reviews, or merge. The fetched Gemini
+gallery HTML still has no Secret Handoff reference. Glama's GitHub Authorize
+button remains disabled, and its owner handoff is pending. The mcpservers.org
+contact-email permission remains unanswered; no transmission was retried.
