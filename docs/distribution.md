@@ -1,5 +1,11 @@
 # Distribution status
 
+The Claude Code and Codex repository plugins for CLI 0.0.4 include the local
+handoff wait fix and updated Claude card. See the
+[plugin release and upgrade steps](https://github.com/geland/secrethandoff-integrations/releases/tag/v0.0.4).
+
+## Plugin 0.0.2
+
 Release scope, October 20, 2026: Claude Code and Codex repository plugins for
 signed CLI 0.0.2, including grouped local requests and owner opt-in host approval.
 Browser command approval remains the distribution default. See

@@ -4,61 +4,61 @@
   "name": "com.secrethandoff/secrethandoff",
   "packages": [
     {
-      "fileSha256": "9d1750efa1b293b83977a279385f5d307d6bab35e0d578877faff5cd34c2f991",
-      "identifier": "https://github.com/geland/secrethandoff/releases/download/cli-v0.0.2/secrethandoff_0.0.2_darwin_amd64.mcpb",
+      "fileSha256": "da1b358138e1c934ea0ffde4f8d369f97012c0f6a9f8b57b01bcbbd907983ba0",
+      "identifier": "https://github.com/geland/secrethandoff/releases/download/cli-v0.0.4/secrethandoff_0.0.4_darwin_amd64.mcpb",
       "registryType": "mcpb",
       "transport": {
         "type": "stdio"
       },
-      "version": "0.0.2"
+      "version": "0.0.4"
     },
     {
-      "fileSha256": "0fb79843717c7561a270792f0d6d4ba02241b9c743ab213d36d6a073457b7f79",
-      "identifier": "https://github.com/geland/secrethandoff/releases/download/cli-v0.0.2/secrethandoff_0.0.2_darwin_arm64.mcpb",
+      "fileSha256": "9474d488bc9578d7c6a94f2d7214df161becce5ff61d85c6ae806303c0b8a3cd",
+      "identifier": "https://github.com/geland/secrethandoff/releases/download/cli-v0.0.4/secrethandoff_0.0.4_darwin_arm64.mcpb",
       "registryType": "mcpb",
       "transport": {
         "type": "stdio"
       },
-      "version": "0.0.2"
+      "version": "0.0.4"
     },
     {
-      "fileSha256": "c5644bcef5f3e5036ff829f618d617cb3c812342d05ed50523007c472b1a6419",
-      "identifier": "https://github.com/geland/secrethandoff/releases/download/cli-v0.0.2/secrethandoff_0.0.2_linux_amd64.mcpb",
+      "fileSha256": "86fa54ca1cb4ed85a3758df1a3ad36366b9f0eff45973f63237073c04f27365d",
+      "identifier": "https://github.com/geland/secrethandoff/releases/download/cli-v0.0.4/secrethandoff_0.0.4_linux_amd64.mcpb",
       "registryType": "mcpb",
       "transport": {
         "type": "stdio"
       },
-      "version": "0.0.2"
+      "version": "0.0.4"
     },
     {
-      "fileSha256": "72d3f0cfa43983ba6d1e81f063b2f481970c7eaec55b986732acc7e7f750c253",
-      "identifier": "https://github.com/geland/secrethandoff/releases/download/cli-v0.0.2/secrethandoff_0.0.2_linux_arm64.mcpb",
+      "fileSha256": "9fedd743ffb314320cdbdff184e027b62099fdd4c279308fbc634f7c1029b9d7",
+      "identifier": "https://github.com/geland/secrethandoff/releases/download/cli-v0.0.4/secrethandoff_0.0.4_linux_arm64.mcpb",
       "registryType": "mcpb",
       "transport": {
         "type": "stdio"
       },
-      "version": "0.0.2"
+      "version": "0.0.4"
     },
     {
-      "fileSha256": "5e1c86f3b46d5d1edf0a472da6ecf302f6ce8a0807d5e0cfa140b03b16fe0eaa",
-      "identifier": "https://github.com/geland/secrethandoff/releases/download/cli-v0.0.2/secrethandoff_0.0.2_windows_amd64.mcpb",
+      "fileSha256": "0994e2308d1c21f8ffb4016915b02f810c4c9b3590146e161a2881b07b3bbb75",
+      "identifier": "https://github.com/geland/secrethandoff/releases/download/cli-v0.0.4/secrethandoff_0.0.4_windows_amd64.mcpb",
       "registryType": "mcpb",
       "transport": {
         "type": "stdio"
       },
-      "version": "0.0.2"
+      "version": "0.0.4"
     },
     {
-      "fileSha256": "99837502c1890a075bf3e1fa35e2452de68dccf4b072d9d7e8b9d23a0cb12c42",
-      "identifier": "https://github.com/geland/secrethandoff/releases/download/cli-v0.0.2/secrethandoff_0.0.2_windows_arm64.mcpb",
+      "fileSha256": "b38e928b3a4e1e62952e9ed3fe1a4e22dfc39e43cc321def5f4e9eab7cd1fc12",
+      "identifier": "https://github.com/geland/secrethandoff/releases/download/cli-v0.0.4/secrethandoff_0.0.4_windows_arm64.mcpb",
       "registryType": "mcpb",
       "transport": {
         "type": "stdio"
       },
-      "version": "0.0.2"
+      "version": "0.0.4"
     }
   ],
   "title": "Secret Handoff",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "websiteUrl": "https://secrethandoff.com/agents"
 }
