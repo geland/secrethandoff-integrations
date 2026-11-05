@@ -8,17 +8,17 @@ shows why the agent needs access, and applies secrets to requests you approve.
 No vault to configure. No Secret Handoff account.
 
 This repository publishes the Claude Code and Codex plugins for the signed
-[Secret Handoff 0.0.2 release](https://github.com/geland/secrethandoff/releases/tag/cli-v0.0.2).
+[Secret Handoff 0.0.4 release](https://github.com/geland/secrethandoff/releases/tag/cli-v0.0.4).
 It includes the skill, local stdio MCP configuration, Claude detection hooks,
 and a status-only Claude card. Secret entry stays in your browser.
 These are repository plugins, not claims of vendor-curated directory approval.
 
 ## Install
 
-[Download and install the local tool](https://secrethandoff.com/download) first.
-Choose binary **0.0.2**. The website installer verifies its archive checksum and
-installs the binary. Run `secrethandoff setup` below to connect Claude Code and
-Codex when their CLIs are on PATH.
+Install [CLI 0.0.4](https://github.com/geland/secrethandoff/releases/tag/cli-v0.0.4)
+first. Choose the archive for your platform and verify it with the release's
+`SHA256SUMS`. Run `secrethandoff setup` below to connect Claude Code and Codex
+when their CLIs are on PATH.
 
 ```sh
 secrethandoff version
@@ -26,7 +26,7 @@ secrethandoff setup
 secrethandoff doctor
 ```
 
-Expected version: `0.0.2`. In the project where your agent works, run
+The expected version is `0.0.4`. In the project where your agent works, run
 `secrethandoff init` to add credential guidance. Start a new agent session.
 
 ### Claude Code
@@ -50,10 +50,33 @@ be on the PATH inherited by the client, including when launching a desktop app.
 `secrethandoff doctor` checks the local setup.
 
 For a pinned marketplace, Codex accepts
-`codex plugin marketplace add geland/secrethandoff-integrations --ref v0.0.2`.
+`codex plugin marketplace add geland/secrethandoff-integrations --ref v0.0.4`.
 Claude Code accepts the Git source
-`https://github.com/geland/secrethandoff-integrations.git#v0.0.2` with
+`https://github.com/geland/secrethandoff-integrations.git#v0.0.4` with
 `claude plugin marketplace add`. The release ZIP is also available for review.
+
+## Update an existing installation
+
+Install the new binary first and verify that `secrethandoff version` reports
+`0.0.4`. Both plugins launch the binary on your PATH.
+
+### Update Claude Code
+
+```sh
+claude plugin marketplace update secrethandoff
+claude plugin update secrethandoff@secrethandoff
+```
+
+### Update Codex
+
+```sh
+codex plugin marketplace upgrade secrethandoff
+codex plugin add secrethandoff@secrethandoff
+```
+
+If your marketplace is pinned, switch its source to `v0.0.4` first.
+Start a fresh agent session after updating. If you opted into Codex command
+approval, reapply the opt-in as described below.
 
 ## Use
 
@@ -88,7 +111,7 @@ helper, then start a fresh chat. The helper is not included in the review ZIP:
 ```bash
 codex plugin add secrethandoff@secrethandoff
 python3 scripts/configure_codex_approval.py codex \
-  --plugin-dir ~/.codex/plugins/cache/secrethandoff/secrethandoff/0.0.2
+  --plugin-dir ~/.codex/plugins/cache/secrethandoff/secrethandoff/0.0.4
 ```
 
 The helper validates and edits only the installed `mcp.json` and `.mcp.json`

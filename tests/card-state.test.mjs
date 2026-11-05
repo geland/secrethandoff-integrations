@@ -22,6 +22,8 @@ test('Claude card prefers structured state and preserves prose compatibility', (
   assert.equal(statusOf('request_secret',false,true,false,'X is ready.',{status:'ready'}).tone,'error');
   assert.equal(statusOf('request_secret',false,false,true,'X is ready.',{status:'ready'}).tone,'stop');
   assert.match(statusOf('request_secret',true,false,false,'').text,/Waiting for Secret Handoff/);
+  assert.match(statusOf('wait_for_secret',false,false,false,'',{status:'pending',presentation:'browser_page'}).text,/check ended before submission/);
+  assert.match(statusOf('request_secrets',false,false,false,'Waiting for all fields on one Secret Handoff page.').text,/check ended before submission/);
   assert.match(statusOf('wait_for_secret',false,false,false,'',{status:'pending',presentation:'remote_link'}).text,/other device/);
 });
 
@@ -33,10 +35,15 @@ test('wait cards identify existing requests without inventing a reason or policy
   assert.equal(card.rows.length,0);
 });
 
-test('the host output supplies state only through structuredContent', () => {
+test('Claude card reads structuredContent and JSON text emitted by the host', () => {
   const state={status:'ready'};
   assert.equal(resultState({structuredContent:state}),state);
   assert.equal(resultState([{type:'text',text:'X is ready.'}]),undefined);
+  assert.equal(resultState('{"status":'),undefined);
+  const text=JSON.stringify({name:'TEST_LOGIN',names:['TEST_USER','TEST_PASSWORD'],presentation:'browser_page',status:'ready'});
+  for (const output of [text,[{type:'text',text}]]) {
+    assert.equal(statusOf('request_secrets',false,false,false,text,resultState(output)).text,'Ready. The agent uses the secret by name and never sees it.');
+  }
 });
 
 test('command cards identify the folder and avoid guessing the approval surface', () => {
