@@ -52,7 +52,7 @@ jobs:
               executable.write_bytes(archive.extractfile(member).read())
               executable.chmod(0o755)
       - name: Verify public bundle installation over local stdio
-        run: python scripts/test_mcpb.py dist/secrethandoff-multiplatform.mcpb
+        run: python scripts/test_mcpb.py --registry dist/secrethandoff-multiplatform.mcpb
       - name: Authenticate with short-lived GitHub identity
         run: ./dist/mcp-publisher login github-oidc
       - name: Publish exact bundle metadata

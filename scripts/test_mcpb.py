@@ -3,6 +3,7 @@
 
 No credentials, fill pages, network calls, owner configuration, or model task.
 """
+import argparse
 import hashlib
 import json
 import os
@@ -16,12 +17,20 @@ import threading
 from zipfile import ZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
-bundle = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / 'dist/secrethandoff-multiplatform.mcpb'
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('bundle', nargs='?', type=Path, default=ROOT / 'dist/secrethandoff-multiplatform.mcpb')
+parser.add_argument('--registry', action='store_true', help='Check the published Registry pin instead of the current plugin lock')
+args = parser.parse_args()
+registry = None
+if args.registry:
+    registry = json.loads((ROOT / 'packaging/mcpb/registry-server.json').read_text())
+    with args.bundle.open('rb') as source:
+        assert hashlib.file_digest(source, 'sha256').hexdigest() == registry['packages'][0]['fileSha256']
 node = shutil.which('node')
 assert node, 'Node required'
 with tempfile.TemporaryDirectory(prefix='secrethandoff-bundle-') as folder:
     root = Path(folder)
-    with ZipFile(bundle) as archive:
+    with ZipFile(args.bundle) as archive:
         assert all('..' not in Path(x.filename).parts and not Path(x.filename).is_absolute() for x in archive.infolist())
         archive.extractall(root)
         for entry in archive.infolist():
@@ -30,8 +39,11 @@ with tempfile.TemporaryDirectory(prefix='secrethandoff-bundle-') as folder:
         assert b'\r\n' not in (root / name).read_bytes(), 'Packaged text must use LF on every runner'
     manifest = json.loads((root / 'manifest.json').read_text())
     index = json.loads((root / 'server/binaries.json').read_text())
-    lock = json.loads((ROOT / 'release-lock.json').read_text())
-    assert json.loads((root / 'release-lock.json').read_text()) == lock
+    lock = json.loads((root / 'release-lock.json').read_text())
+    if registry is None:
+        assert lock == json.loads((ROOT / 'release-lock.json').read_text())
+    else:
+        assert lock['version'] == registry['version']
     assert manifest['version'] == index['version'] == lock['version']
     assert manifest['server']['mcp_config'] == {'command':'node','args':['${__dirname}/server/launch.cjs']}
     assert set(index['binaries']) == {f'{p}-{a}' for p in ('darwin','linux','win32') for a in ('x64','arm64')}

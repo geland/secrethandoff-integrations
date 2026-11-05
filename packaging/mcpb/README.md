@@ -37,6 +37,8 @@ launcher.
 ## Registry publication
 
 `registry-server.json` pins the separate public bundle and its exact checksum.
+The Registry workflow verifies that bundle against its own pin, so the
+marketplace plugins can ship on a different version.
 It uses `io.github.geland/secrethandoff`, which GitHub Actions OIDC can verify
 from repository ownership. The unpublished domain-namespace listing metadata in the root
 `server.json` remains an immutable record of the original CLI bundles, not a

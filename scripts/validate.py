@@ -120,11 +120,12 @@ else:
 registry_bundle = ROOT / 'packaging/mcpb/registry-server.json'
 if registry_bundle.exists():
     entry = json.loads(registry_bundle.read_text())
+    registry_version = entry['version']
     assert entry['name'] == 'io.github.geland/secrethandoff' and not entry.get('remotes')
-    assert entry['version'] == lock['version'] and len(entry['packages']) == 1
+    assert re.fullmatch(r'\d+\.\d+\.\d+', registry_version) and len(entry['packages']) == 1
     bundle = entry['packages'][0]
     assert bundle['registryType'] == 'mcpb' and bundle['transport'] == {'type': 'stdio'}
-    assert bundle['identifier'] == f"https://github.com/geland/secrethandoff-integrations/releases/download/mcpb-v{lock['version']}/secrethandoff-multiplatform.mcpb"
+    assert bundle['identifier'] == f"https://github.com/geland/secrethandoff-integrations/releases/download/mcpb-v{registry_version}/secrethandoff-multiplatform.mcpb"
     assert re.fullmatch(r'[a-f0-9]{64}', bundle['fileSha256'])
     print('Separate Registry bundle contract passed')
 
