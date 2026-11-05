@@ -76,16 +76,27 @@ export function resultText(output: unknown): string {
   return ''
 }
 
-// Hosts that preserve structuredContent need no prose parsing. Older hosts
-// still use the compatibility text below.
+// Claude Code can flatten structuredContent to a JSON string. Older hosts
+// still use the compatibility prose below.
 export function resultState(output: unknown): unknown {
-  return output && typeof output === 'object' ? (output as { structuredContent?: unknown }).structuredContent : undefined
+  const state = output && typeof output === 'object' ? (output as { structuredContent?: unknown }).structuredContent : undefined
+  if (state != null) return state
+  const text = resultText(output).trim()
+  if (!text.startsWith('{')) return undefined
+  try {
+    const parsed = JSON.parse(text)
+    return typeof parsed.status === 'string' ? parsed : undefined
+  } catch {
+    return undefined
+  }
 }
 
 function firstSentence(text: string): string {
   const m = /^.*?[.!?](?=\s|$)/s.exec(text.trim())
   return (m ? m[0] : text.trim()).slice(0, 300)
 }
+
+const pendingBrowser: Status = { tone: 'wait', text: 'This check ended before submission. The agent can check again.' }
 
 // The card's status line, from the row's state and the binary's result text.
 export function statusOf(kind: string, isRunning: boolean, isErrored: boolean, isInterrupted: boolean, text: string, data?: unknown): Status {
@@ -118,7 +129,7 @@ export function statusOf(kind: string, isRunning: boolean, isErrored: boolean, i
   switch (state?.status) {
     case 'ready': return { tone: 'ok', text: 'Ready. The agent uses the secret by name and never sees it.' }
     case 'pending': return state.presentation === 'browser_page'
-      ? { tone: 'wait', text: 'Still waiting for you on the Secret Handoff page in your browser.' }
+      ? pendingBrowser
       : state.presentation === 'client_prompt' || state.presentation === 'remote_link'
         ? { tone: 'wait', text: 'Waiting for you on the Secret Handoff page on your other device.', code: pairing }
         : { tone: 'wait', text: 'Waiting for Secret Handoff.' }
@@ -137,7 +148,7 @@ export function statusOf(kind: string, isRunning: boolean, isErrored: boolean, i
   }
   if (/^Waiting for the user.*other device/.test(text)) return { tone: 'wait', text: 'Still waiting for you on the Secret Handoff page on your other device.' }
   if (/^Waiting for the user to approve/.test(text)) return { tone: 'wait', text: 'Waiting for you to approve the command on the page in your browser.' }
-  if (/^Waiting for the user/.test(text)) return { tone: 'wait', text: 'Still waiting for you on the page in your browser.' }
+  if (/^Waiting for (the user|all fields)/.test(text)) return pendingBrowser
   if (/declined|did not approve/.test(text)) return { tone: 'stop', text: kind === 'run_with_secret' ? 'You denied the command. It did not run.' : 'You declined. The agent did not get a secret.' }
   if (/cancelled/.test(text)) return { tone: 'stop', text: 'Cancelled. Any value was discarded.' }
   if (/expired/.test(text)) return { tone: 'stop', text: 'The request expired.' }
